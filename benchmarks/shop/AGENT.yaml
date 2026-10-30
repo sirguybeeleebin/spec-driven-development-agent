@@ -1,0 +1,89 @@
+max_fix_attempts: 3
+
+repomap:
+  max_tokens: 2000
+
+agents:
+  researcher:
+    provider:
+      base_url: http://192.168.50.236:8080/v1
+      api_key: none
+      model: Qwen3-Coder-30B-A3B-Instruct-Q4_K_M
+      temperature: 0.2
+      frequency_penalty: 0.5
+      presence_penalty: 0.3
+      max_tokens: 4096
+      repeat_penalty: 1.15
+      repeat_last_n: 256
+    tools:
+      - bash
+    max_iterations: 10
+
+  implementer:
+    provider:
+      base_url: http://192.168.50.236:8080/v1
+      api_key: none
+      model: Qwen3-Coder-30B-A3B-Instruct-Q4_K_M
+      temperature: 0.2
+      frequency_penalty: 0.5
+      presence_penalty: 0.3
+      max_tokens: 8192
+      repeat_penalty: 1.15
+      repeat_last_n: 256
+    tools:
+      - read
+      - append
+      - patch
+      - load_skill
+      - bash
+    skills:
+      - implementing-business-logic
+      - sqlite-implementing
+      - fastapi-router-implementing
+    max_iterations: 30
+
+  tester:
+    provider:
+      base_url: http://192.168.50.236:8080/v1
+      api_key: none
+      model: Qwen3-Coder-30B-A3B-Instruct-Q4_K_M
+      temperature: 0.2
+      frequency_penalty: 0.5
+      presence_penalty: 0.3
+      max_tokens: 8192
+      repeat_penalty: 1.15
+      repeat_last_n: 256
+    tools:
+      - append
+      - load_skill
+      - bash
+    skills:
+      - sqlite-testing
+      - fastapi-router-testing
+      - testing-with-mocks
+    max_iterations: 15
+
+  fixer:
+    provider:
+      base_url: http://192.168.50.236:8080/v1
+      api_key: none
+      model: Qwen3-Coder-30B-A3B-Instruct-Q4_K_M
+      temperature: 0.2
+      frequency_penalty: 0.5
+      presence_penalty: 0.3
+      max_tokens: 4096
+      repeat_penalty: 1.15
+      repeat_last_n: 256
+    tools:
+      - read
+      - patch
+      - load_skill
+      - bash
+    skills:
+      - implementing-business-logic
+      - sqlite-implementing
+      - sqlite-testing
+      - fastapi-router-implementing
+      - fastapi-router-testing
+      - testing-with-mocks
+    max_iterations: 10
